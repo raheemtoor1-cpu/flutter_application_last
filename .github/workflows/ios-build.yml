@@ -16,11 +16,19 @@ jobs:
         with:
           channel: stable
 
-      - name: Check Flutter version
-        run: flutter --version
-
       - name: Get Flutter dependencies
         run: flutter pub get
 
       - name: Build iOS
         run: flutter build ios --release --no-codesign
+
+      - name: Create iOS artifact
+        run: |
+          mkdir -p ios-artifact
+          cp -R build/ios/iphoneos/Runner.app ios-artifact/
+
+      - name: Upload iOS artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: timetable-ios-build
+          path: ios-artifact
