@@ -27,11 +27,13 @@ jobs:
 
       - name: Create iOS artifact
         run: |
-          mkdir -p ios-artifact
-          cp -R build/ios/iphoneos/Runner.app ios-artifact/
+          mkdir -p ios-artifact/Payload
+          cp -R build/ios/iphoneos/Runner.app ios-artifact/Payload/
+          cd ios-artifact
+          zip -r timetable-ios.ipa Payload
 
       - name: Upload iOS artifact
         uses: actions/upload-artifact@v4
         with:
           name: timetable-ios-build
-          path: ios-artifact
+          path: ios-artifact/timetable-ios.ipa
